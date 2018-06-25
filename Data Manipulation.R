@@ -24,7 +24,6 @@ sqldf('select avg("Sepal.Length"),avg("Sepal.Width"),
 
 sqldf('select "Species"  from iris where "Species" like "v%" ')
 
-
 #Create dept dataframe and emp dataframe and perform inner,leftouter,RightOuter 
 #and FullOuter Joins using SQLDF
 
@@ -36,7 +35,6 @@ employee = data.frame(
   Dept = c(100,200,300,400,500,900),
   stringsAsFactors = FALSE
 )
-
 View(employee)
 
 department = data.frame(
@@ -44,9 +42,9 @@ department = data.frame(
   Dept_name = c("IT","HR","Finance","Operations","Governance","Support"),
   stringsAsFactors = FALSE
 )
-
 View(emp.dept)
 
+#Inner join
 sqldf(
 "SELECT 
  employee.emp_id
@@ -61,7 +59,7 @@ department
 ON 
 employee.Dept = department.Dept")
 
-
+#Left Join
 sqldf(
   "SELECT 
  employee.emp_id
@@ -91,24 +89,7 @@ SELECT
   ON 
   employee.Dept = department.Dept")
 
-sqldf("
-SELECT 
-employee.emp_id
-,employee.emp_name
-,employee.salary
-,department.Dept_name 
-,department.Dept
-FROM 
-department
-LEFT OUTER JOIN 
-employee 
-ON 
-employee.Dept = department.Dept
-WHERE employee.Dept IS NULL;
-")
-
-
-#full Outer join
+#Full Outer join
 sqldf("
   SELECT 
   employee.emp_id
@@ -135,5 +116,5 @@ sqldf("
  employee 
   ON 
   employee.Dept = department.Dept
- WHERE employee.Dept IS NULL;
+ WHERE employee.Dept IS NULL
   ")

@@ -118,3 +118,11 @@ sqldf("
   employee.Dept = department.Dept
  WHERE employee.Dept IS NULL
   ")
+
+
+install.packages("dplyr")
+library(dplyr)
+left_join(department,employee,by="Dept")
+inner_join(department,employee,by="Dept")
+right_join(department,employee,by="Dept")
+full_join(department,employee,by="Dept")

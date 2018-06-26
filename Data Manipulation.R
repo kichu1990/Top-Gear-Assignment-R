@@ -119,10 +119,16 @@ sqldf("
  WHERE employee.Dept IS NULL
   ")
 
-
+#4.Perform above exercise using dplyr package functions
 install.packages("dplyr")
 library(dplyr)
 left_join(department,employee,by="Dept")
 inner_join(department,employee,by="Dept")
 right_join(department,employee,by="Dept")
 full_join(department,employee,by="Dept")
+
+#5.Perform above exercises using dataframe operations
+merge(x=employee,y=department,by="Dept")
+merge(x=employee,y=department,by="Dept",all.x=TRUE)
+merge(x=employee,y=department,by="Dept",all.y=TRUE)
+merge(x=employee,y=department,by="Dept",all=TRUE)

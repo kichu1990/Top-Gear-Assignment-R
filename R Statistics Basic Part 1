@@ -1,8 +1,16 @@
-#6.use Bartlett’s test to determine whether the variance in weight is the same for all treatment groups in PlantGrowth DataSet?
+#1. calculate pearson correlation coefficient between trees$Girth and trees$volume of default trees dataset in R
+#Pl mention what you draw from correlation coefficient
 
+cor(trees$Girth,trees$Volume)  #0.9671194
+trees$Girth and trees$Volume are postively corelated.
+
+
+#6.use Bartlett’s test to determine whether the variance in weight is the same for all treatment groups in PlantGrowth DataSet?
 View(PlantGrowth)
 bartlett.test(PlantGrowth$weight, PlantGrowth$group)  #p-value = 0.2371
 
 #The null Hypothesis we assume the sample have Equal Variance and Alternate Hypothesis state that atleast one sample have 
-#significantly different variance.We reject null Hypothesis if p<0.05
+#significantly different variance.We reject null Hypothesis if p<0.05.
+
+#Here we reject the Null Hypothesis and we can conclude that variance in weight is not same across all the treatment group.
 

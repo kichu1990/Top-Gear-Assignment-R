@@ -1,2 +1,8 @@
 #6.use Bartlett’s test to determine whether the variance in weight is the same for all treatment groups in PlantGrowth DataSet?
 
+View(PlantGrowth)
+bartlett.test(PlantGrowth$weight, PlantGrowth$group)  #p-value = 0.2371
+
+#The null Hypothesis we assume the sample have Equal Variance and Alternate Hypothesis state that atleast one sample have 
+#significantly different variance.We reject null Hypothesis if p<0.05
+

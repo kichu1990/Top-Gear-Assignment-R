@@ -2,7 +2,7 @@
 #Pl mention what you draw from correlation coefficient
 
 cor(trees$Girth,trees$Volume)  #0.9671194
-trees$Girth and trees$Volume are postively corelated.
+trees$Girth and trees$Volume are postively correlated.
 
 
 #6.use Bartlett’s test to determine whether the variance in weight is the same for all treatment groups in PlantGrowth DataSet?

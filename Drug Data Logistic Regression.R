@@ -92,10 +92,13 @@ table(test_Drug$DFREE,test_Drug$pred_test > 0.4)
 
 #3.Develop a Tree based model to address the same problem
 # Install rpart library
-install.packages("rpart")
 library(rpart)
-install.packages("rpart.plot")
 library(rpart.plot)
 
 tree_drug=rpart(DFREE~.,data=train_Drug,method="class")
 prp(tree_census)
+
+# Make predictions
+PredictCART = predict(tree_drug, newdata = test_Drug, type = "class")
+table(test_Drug$DFREE, PredictCART)
+(114+5)/nrow(test_Drug)                                          #0.6918605

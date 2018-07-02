@@ -55,28 +55,40 @@ cor(train_Drug[,unlist(lapply(train_Drug, is.numeric))])
 Model1=glm(DFREE~.,data=train_Drug,family="binomial")
 summary(Model1)
 
-#Build a Model using the Significant variable
-
+#Build a Model using the Significant variable based on the P value
 Model2=glm(DFREE~NDRUGTX+IVHX+AGE,data=train_Drug,family="binomial")
 summary(Model2)
-
-#Checking accuracy on Train Data
-res =predict(Model2,train_Drug,type = "response")
-table(ActualValue = train_Drug$DFREE, PredictedValue = res >0.5)
-(298+1)/nrow(train_Drug)  # 0.7419355
-
-#Checking accuracy on Test Data
-test_Drug$pred_test=predict(Model2,newdata=test_Drug,type="response")
-table(test_Drug$DFREE,test_Drug$pred_test > 0.5)
-(128+0)/nrow(test_Drug)   #0.744186  
 
 #stepwise Logistic Regression
 Model3=glm(DFREE~.,data=train_Drug, family="binomial")
 step(Model3)
 
-#Below Model give the least AIC
+#Below Model give the least AIC after the stepwise Logistic Regression
 glm(formula = DFREE ~ AGE + IVHX + NDRUGTX, family = "binomial", 
     data = train_Drug)
+
+#Using ROC Curve to Determine the Threshold
+library(ROCR) 
+library(Metrics)
+predict = prediction(res,train_Drug$DFREE)
+perf = performance(predict,measure = "tpr",x.measure = "fpr") 
+plot(perf,colorize=T)
+auc.temp=performance(predict,"auc")
+AUC=as.numeric(auc.temp@y.values)
+
+#Checking accuracy on Train Data
+res =predict(Model2, train_Drug, type = "response" )
+table(res)
+result = ifelse(res > 0.4, 1, 0)
+table(result)
+table(ActualValue = train_Drug$DFREE, PredictedValue = res >0.4)
+(276+12)/nrow(train_Drug)                                          #0.7146402
+
+#Checking accuracy on Test Data
+test_Drug$pred_test=predict(Model2,newdata=test_Drug,type="response")
+table(test_Drug$DFREE,test_Drug$pred_test > 0.4)
+(117+7)/nrow(test_Drug)                                            #0.7209302    
+
 
 #3.Develop a Tree based model to address the same problem
 # Install rpart library
@@ -85,7 +97,5 @@ library(rpart)
 install.packages("rpart.plot")
 library(rpart.plot)
 
-
 tree_drug=rpart(DFREE~.,data=train_Drug,method="class")
 prp(tree_census)
-
